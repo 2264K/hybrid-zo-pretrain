@@ -1,0 +1,210 @@
+Skipping import of cpp extensions due to incompatible torch version 2.9.0+cu128 for torchao version 0.15.0             Please see https://github.com/pytorch/ao/issues/2919 for more info
+Model: 1439M
+BP gradients: 170 layers
+ZO gradients: 170 layers, dd=-0.098705
+
+Layer                                               cos_sim    bp_norm    zo_norm
+--------------------------------------------------------------------------------
+lm_head.weight                                       0.0001     3.3281     0.0984
+model.embed_tokens.weight                           -0.0001     9.8423     0.0984
+model.layers.0.mlp.down_proj.weight                  0.0001     6.0253     0.0988
+model.layers.0.mlp.gate_proj.weight                  0.0003     5.8787     0.0988
+model.layers.0.mlp.up_proj.weight                   -0.0002     5.8524     0.0989
+model.layers.0.self_attn.k_proj.weight              -0.0002     3.2655     0.0987
+model.layers.0.self_attn.o_proj.weight              -0.0005     8.5648     0.0987
+model.layers.0.self_attn.q_proj.weight              -0.0006     3.2471     0.0987
+model.layers.0.self_attn.v_proj.weight              -0.0003     8.6091     0.0987
+model.layers.1.mlp.down_proj.weight                 -0.0002     3.0893     0.0988
+model.layers.1.mlp.gate_proj.weight                 -0.0001     3.0147     0.0988
+model.layers.1.mlp.up_proj.weight                   -0.0001     3.0804     0.0988
+model.layers.1.self_attn.k_proj.weight               0.0005     0.4870     0.0986
+model.layers.1.self_attn.o_proj.weight               0.0005     4.2050     0.0987
+model.layers.1.self_attn.q_proj.weight               0.0002     0.4748     0.0987
+model.layers.1.self_attn.v_proj.weight              -0.0003     4.2512     0.0988
+model.layers.10.mlp.down_proj.weight                -0.0001     0.8366     0.0989
+model.layers.10.mlp.gate_proj.weight                -0.0001     0.8110     0.0988
+model.layers.10.mlp.up_proj.weight                   0.0003     0.8355     0.0989
+model.layers.10.self_attn.k_proj.weight              0.0006     0.0852     0.0987
+model.layers.10.self_attn.o_proj.weight             -0.0005     1.0076     0.0987
+model.layers.10.self_attn.q_proj.weight             -0.0001     0.0833     0.0987
+model.layers.10.self_attn.v_proj.weight              0.0009     1.0295     0.0988
+model.layers.11.mlp.down_proj.weight                 0.0000     0.7834     0.0988
+model.layers.11.mlp.gate_proj.weight                -0.0003     0.7584     0.0988
+model.layers.11.mlp.up_proj.weight                  -0.0001     0.7919     0.0988
+model.layers.11.self_attn.k_proj.weight             -0.0005     0.0730     0.0987
+model.layers.11.self_attn.o_proj.weight             -0.0009     0.9562     0.0987
+model.layers.11.self_attn.q_proj.weight             -0.0003     0.0742     0.0987
+model.layers.11.self_attn.v_proj.weight             -0.0006     0.9589     0.0987
+model.layers.12.mlp.down_proj.weight                -0.0001     0.7365     0.0989
+model.layers.12.mlp.gate_proj.weight                 0.0005     0.7326     0.0988
+model.layers.12.mlp.up_proj.weight                   0.0002     0.7371     0.0988
+model.layers.12.self_attn.k_proj.weight              0.0002     0.0687     0.0987
+model.layers.12.self_attn.o_proj.weight              0.0008     0.9008     0.0987
+model.layers.12.self_attn.q_proj.weight             -0.0001     0.0716     0.0987
+model.layers.12.self_attn.v_proj.weight             -0.0008     0.8835     0.0987
+model.layers.13.mlp.down_proj.weight                 0.0002     0.7021     0.0989
+model.layers.13.mlp.gate_proj.weight                -0.0001     0.6886     0.0988
+model.layers.13.mlp.up_proj.weight                   0.0003     0.6958     0.0989
+model.layers.13.self_attn.k_proj.weight             -0.0006     0.0681     0.0987
+model.layers.13.self_attn.o_proj.weight             -0.0005     0.8360     0.0987
+model.layers.13.self_attn.q_proj.weight             -0.0002     0.0688     0.0987
+model.layers.13.self_attn.v_proj.weight              0.0001     0.8241     0.0987
+model.layers.14.mlp.down_proj.weight                -0.0005     0.6552     0.0988
+model.layers.14.mlp.gate_proj.weight                 0.0001     0.6528     0.0989
+model.layers.14.mlp.up_proj.weight                  -0.0003     0.6633     0.0988
+model.layers.14.self_attn.k_proj.weight              0.0003     0.0634     0.0987
+model.layers.14.self_attn.o_proj.weight              0.0005     0.7852     0.0988
+model.layers.14.self_attn.q_proj.weight             -0.0003     0.0637     0.0987
+model.layers.14.self_attn.v_proj.weight             -0.0008     0.7746     0.0987
+model.layers.15.mlp.down_proj.weight                -0.0004     0.6329     0.0989
+model.layers.15.mlp.gate_proj.weight                 0.0001     0.6260     0.0988
+model.layers.15.mlp.up_proj.weight                  -0.0002     0.6353     0.0988
+model.layers.15.self_attn.k_proj.weight             -0.0002     0.0650     0.0987
+model.layers.15.self_attn.o_proj.weight             -0.0001     0.7442     0.0987
+model.layers.15.self_attn.q_proj.weight             -0.0004     0.0629     0.0987
+model.layers.15.self_attn.v_proj.weight              0.0006     0.7424     0.0987
+model.layers.16.mlp.down_proj.weight                 0.0002     0.5938     0.0989
+model.layers.16.mlp.gate_proj.weight                -0.0002     0.5764     0.0988
+model.layers.16.mlp.up_proj.weight                  -0.0001     0.6014     0.0989
+model.layers.16.self_attn.k_proj.weight             -0.0005     0.0539     0.0988
+model.layers.16.self_attn.o_proj.weight              0.0005     0.7187     0.0987
+model.layers.16.self_attn.q_proj.weight             -0.0001     0.0540     0.0987
+model.layers.16.self_attn.v_proj.weight              0.0005     0.7114     0.0988
+model.layers.17.mlp.down_proj.weight                 0.0003     0.5595     0.0988
+model.layers.17.mlp.gate_proj.weight                 0.0001     0.5652     0.0989
+model.layers.17.mlp.up_proj.weight                   0.0002     0.5754     0.0988
+model.layers.17.self_attn.k_proj.weight             -0.0008     0.0515     0.0987
+model.layers.17.self_attn.o_proj.weight             -0.0006     0.6757     0.0987
+model.layers.17.self_attn.q_proj.weight             -0.0001     0.0513     0.0988
+model.layers.17.self_attn.v_proj.weight              0.0009     0.6851     0.0987
+model.layers.18.mlp.down_proj.weight                 0.0006     0.5507     0.0988
+model.layers.18.mlp.gate_proj.weight                -0.0004     0.5387     0.0989
+model.layers.18.mlp.up_proj.weight                   0.0001     0.5433     0.0989
+model.layers.18.self_attn.k_proj.weight             -0.0003     0.0520     0.0987
+model.layers.18.self_attn.o_proj.weight              0.0000     0.6419     0.0987
+model.layers.18.self_attn.q_proj.weight              0.0000     0.0538     0.0987
+model.layers.18.self_attn.v_proj.weight              0.0006     0.6431     0.0987
+model.layers.19.mlp.down_proj.weight                 0.0001     0.5301     0.0988
+model.layers.19.mlp.gate_proj.weight                -0.0001     0.5144     0.0988
+model.layers.19.mlp.up_proj.weight                   0.0004     0.5188     0.0988
+model.layers.19.self_attn.k_proj.weight              0.0007     0.0496     0.0987
+model.layers.19.self_attn.o_proj.weight              0.0001     0.6202     0.0988
+model.layers.19.self_attn.q_proj.weight              0.0004     0.0500     0.0987
+model.layers.19.self_attn.v_proj.weight             -0.0002     0.6285     0.0988
+model.layers.2.mlp.down_proj.weight                  0.0002     2.2188     0.0988
+model.layers.2.mlp.gate_proj.weight                  0.0005     2.1653     0.0988
+model.layers.2.mlp.up_proj.weight                    0.0005     2.2401     0.0988
+model.layers.2.self_attn.k_proj.weight              -0.0001     0.3026     0.0987
+model.layers.2.self_attn.o_proj.weight               0.0004     2.9967     0.0987
+model.layers.2.self_attn.q_proj.weight              -0.0002     0.2982     0.0986
+model.layers.2.self_attn.v_proj.weight              -0.0012     2.9409     0.0987
+model.layers.20.mlp.down_proj.weight                 0.0004     0.5091     0.0988
+model.layers.20.mlp.gate_proj.weight                 0.0002     0.4977     0.0988
+model.layers.20.mlp.up_proj.weight                   0.0000     0.5292     0.0988
+model.layers.20.self_attn.k_proj.weight              0.0005     0.0472     0.0987
+model.layers.20.self_attn.o_proj.weight              0.0005     0.6185     0.0987
+model.layers.20.self_attn.q_proj.weight             -0.0004     0.0486     0.0988
+model.layers.20.self_attn.v_proj.weight              0.0002     0.5929     0.0987
+model.layers.21.mlp.down_proj.weight                -0.0000     0.5155     0.0988
+model.layers.21.mlp.gate_proj.weight                -0.0000     0.4907     0.0988
+model.layers.21.mlp.up_proj.weight                  -0.0001     0.4950     0.0988
+model.layers.21.self_attn.k_proj.weight             -0.0009     0.0468     0.0987
+model.layers.21.self_attn.o_proj.weight              0.0003     0.5909     0.0987
+model.layers.21.self_attn.q_proj.weight             -0.0007     0.0459     0.0987
+model.layers.21.self_attn.v_proj.weight              0.0000     0.5951     0.0987
+model.layers.22.mlp.down_proj.weight                -0.0002     0.4936     0.0988
+model.layers.22.mlp.gate_proj.weight                -0.0003     0.4754     0.0988
+model.layers.22.mlp.up_proj.weight                   0.0005     0.4930     0.0988
+model.layers.22.self_attn.k_proj.weight              0.0001     0.0417     0.0987
+model.layers.22.self_attn.o_proj.weight             -0.0002     0.5614     0.0988
+model.layers.22.self_attn.q_proj.weight             -0.0002     0.0418     0.0987
+model.layers.22.self_attn.v_proj.weight             -0.0002     0.5600     0.0987
+model.layers.23.mlp.down_proj.weight                -0.0005     0.4703     0.0988
+model.layers.23.mlp.gate_proj.weight                -0.0002     0.4626     0.0988
+model.layers.23.mlp.up_proj.weight                  -0.0004     0.4518     0.0988
+model.layers.23.self_attn.k_proj.weight              0.0006     0.0412     0.0987
+model.layers.23.self_attn.o_proj.weight             -0.0002     0.5417     0.0988
+model.layers.23.self_attn.q_proj.weight             -0.0002     0.0424     0.0986
+model.layers.23.self_attn.v_proj.weight              0.0002     0.5334     0.0987
+model.layers.3.mlp.down_proj.weight                  0.0008     1.7311     0.0988
+model.layers.3.mlp.gate_proj.weight                  0.0001     1.7308     0.0988
+model.layers.3.mlp.up_proj.weight                   -0.0001     1.7476     0.0988
+model.layers.3.self_attn.k_proj.weight              -0.0004     0.2025     0.0987
+model.layers.3.self_attn.o_proj.weight               0.0007     2.3207     0.0987
+model.layers.3.self_attn.q_proj.weight              -0.0005     0.2040     0.0987
+model.layers.3.self_attn.v_proj.weight              -0.0008     2.2822     0.0987
+model.layers.4.mlp.down_proj.weight                  0.0002     1.4692     0.0988
+model.layers.4.mlp.gate_proj.weight                 -0.0002     1.4455     0.0988
+model.layers.4.mlp.up_proj.weight                   -0.0002     1.4712     0.0988
+model.layers.4.self_attn.k_proj.weight               0.0002     0.1610     0.0987
+model.layers.4.self_attn.o_proj.weight              -0.0004     1.8980     0.0988
+model.layers.4.self_attn.q_proj.weight               0.0001     0.1620     0.0987
+model.layers.4.self_attn.v_proj.weight              -0.0000     1.9015     0.0987
+model.layers.5.mlp.down_proj.weight                 -0.0005     1.3505     0.0988
+model.layers.5.mlp.gate_proj.weight                 -0.0001     1.2810     0.0988
+model.layers.5.mlp.up_proj.weight                    0.0000     1.3266     0.0988
+model.layers.5.self_attn.k_proj.weight               0.0004     0.1368     0.0987
+model.layers.5.self_attn.o_proj.weight              -0.0003     1.6615     0.0987
+model.layers.5.self_attn.q_proj.weight               0.0002     0.1357     0.0987
+model.layers.5.self_attn.v_proj.weight              -0.0004     1.6614     0.0987
+model.layers.6.mlp.down_proj.weight                  0.0004     1.1587     0.0988
+model.layers.6.mlp.gate_proj.weight                 -0.0002     1.1297     0.0988
+model.layers.6.mlp.up_proj.weight                    0.0004     1.1920     0.0988
+model.layers.6.self_attn.k_proj.weight               0.0003     0.1222     0.0987
+model.layers.6.self_attn.o_proj.weight              -0.0003     1.4547     0.0987
+model.layers.6.self_attn.q_proj.weight               0.0000     0.1209     0.0987
+model.layers.6.self_attn.v_proj.weight               0.0001     1.4688     0.0987
+model.layers.7.mlp.down_proj.weight                 -0.0000     1.0777     0.0988
+model.layers.7.mlp.gate_proj.weight                  0.0000     1.0647     0.0988
+model.layers.7.mlp.up_proj.weight                    0.0001     1.0689     0.0988
+model.layers.7.self_attn.k_proj.weight               0.0003     0.1013     0.0988
+model.layers.7.self_attn.o_proj.weight               0.0002     1.3443     0.0987
+model.layers.7.self_attn.q_proj.weight              -0.0004     0.1021     0.0987
+model.layers.7.self_attn.v_proj.weight               0.0008     1.3489     0.0987
+model.layers.8.mlp.down_proj.weight                 -0.0001     0.9773     0.0988
+model.layers.8.mlp.gate_proj.weight                 -0.0002     0.9673     0.0988
+model.layers.8.mlp.up_proj.weight                    0.0002     0.9865     0.0989
+model.layers.8.self_attn.k_proj.weight              -0.0010     0.1017     0.0987
+model.layers.8.self_attn.o_proj.weight               0.0002     1.2277     0.0987
+model.layers.8.self_attn.q_proj.weight               0.0006     0.0999     0.0986
+model.layers.8.self_attn.v_proj.weight              -0.0004     1.2735     0.0987
+model.layers.9.mlp.down_proj.weight                 -0.0003     0.9091     0.0988
+model.layers.9.mlp.gate_proj.weight                 -0.0001     0.9012     0.0989
+model.layers.9.mlp.up_proj.weight                    0.0001     0.9220     0.0988
+model.layers.9.self_attn.k_proj.weight              -0.0003     0.0982     0.0988
+model.layers.9.self_attn.o_proj.weight              -0.0008     1.1323     0.0988
+model.layers.9.self_attn.q_proj.weight               0.0002     0.0981     0.0986
+model.layers.9.self_attn.v_proj.weight              -0.0005     1.1333     0.0987
+
+Overall mean cosine sim: -0.0000
+Min: model.layers.2.self_attn.v_proj.weight = -0.0012
+Max: model.layers.10.self_attn.v_proj.weight = 0.0009
+>0.5: 0/170
+>0.1: 0/170
+>0.01: 0/170
+
+By layer depth:
+  Layer  0: mean=-0.0002, n=7
+  Layer  1: mean=0.0001, n=7
+  Layer  2: mean=0.0000, n=7
+  Layer  3: mean=-0.0000, n=7
+  Layer  4: mean=-0.0000, n=7
+  Layer  5: mean=-0.0001, n=7
+  Layer  6: mean=0.0001, n=7
+  Layer  7: mean=0.0001, n=7
+  Layer  8: mean=-0.0001, n=7
+  Layer  9: mean=-0.0002, n=7
+  Layer 10: mean=0.0001, n=7
+  Layer 11: mean=-0.0004, n=7
+  Layer 12: mean=0.0001, n=7
+  Layer 13: mean=-0.0001, n=7
+  Layer 14: mean=-0.0001, n=7
+  Layer 15: mean=-0.0001, n=7
+  Layer 16: mean=0.0001, n=7
+  Layer 17: mean=-0.0000, n=7
+  Layer 18: mean=0.0001, n=7
+  Layer 19: mean=0.0002, n=7
+  Layer 20: mean=0.0002, n=7
+  Layer 21: mean=-0.0002, n=7
+  Layer 22: mean=-0.0001, n=7
+  Layer 23: mean=-0.0001, n=7

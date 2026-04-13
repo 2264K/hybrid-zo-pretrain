@@ -1,0 +1,7 @@
+torch>=2.4
+transformers>=4.44
+datasets>=2.20
+numpy
+# Mamba-SSM is optional: only needed to run --model mamba1b.
+# Install manually on a compatible GPU/Triton setup:
+#   pip install mamba-ssm causal-conv1d

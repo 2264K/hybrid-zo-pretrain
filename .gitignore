@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+*.log
+logs/
+checkpoints/
+*.pt
+*.safetensors
+.DS_Store
+.vscode/
+.idea/
