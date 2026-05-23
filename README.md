@@ -1,45 +1,44 @@
-# Hybrid ZO+SGD Pretraining — Companion Code
+# Which Layers Need Backpropagation? — Companion Code
 
 Companion code for the preprint:
 
-> **Noise Over Gradients: Hybrid Backpropagation and Forward-Only Zeroth-Order Optimization for Memory-Efficient LLM Pretraining**
+> **Which Layers Need Backpropagation? Position-Dependent Partial Training for Memory-Efficient LLM Pretraining**
 > Raen2264 (independent researcher, pseudonymous).
-> Zenodo preprint v1, 2026. **DOI:** `10.5281/zenodo.XXXXXXX` *(to be filled on upload)*.
+> Zenodo preprint v2, 2026. **DOI:** `10.5281/zenodo.XXXXXXX` *(to be filled on upload)*.
 
-This repository is released as a **priority record (flag v1)** together with the Zenodo preprint. Subsequent versions will be tagged `v2`, `v3`, ... with their own Zenodo DOIs.
-
----
-
-## How to cite
-
-If you use this code or build on the ideas in the paper, please cite the Zenodo record:
-
-```bibtex
-@misc{raen2264_hybrid_zo_2026,
-  author       = {Raen2264},
-  title        = {{Noise Over Gradients}: Hybrid Backpropagation and Forward-Only Zeroth-Order Optimization for Memory-Efficient LLM Pretraining},
-  year         = {2026},
-  publisher    = {Zenodo},
-  version      = {v1},
-  doi          = {10.5281/zenodo.XXXXXXX},
-  url          = {https://doi.org/10.5281/zenodo.XXXXXXX}
-}
-```
-
-The author name **Raen2264** is a pseudonym. When referencing this work, please retain the pseudonym exactly as written.
+This is **v2**, a substantial revision of v1 (*"Noise Over Gradients"*). v1's two headline claims were re-examined: the output-side BP recommendation was overturned by a position sweep, and the "partial beats full BP" claim—reached in v1 via an under-tuned baseline at a 20M-token horizon—turns out to be **correct at scale** when baselines are properly tuned and training is extended to 10B tokens.
 
 ---
 
-## What is this?
+## TL;DR
 
-A single-GPU pretraining scheme that applies standard backpropagation + AdamW to the first **25%** of a network's transformer/SSM blocks, and a single-perturbation zeroth-order (ZO) estimate with plain SGD to the remaining **75%**. In the early-training regime studied (~20M tokens), this matches or improves validation perplexity against full backpropagation across:
+When pretraining a transformer from scratch, you do not need to backpropagate through every layer. Backpropagating a well-chosen **25%** of layers (early-middle for attention models) while **freezing the rest at random initialization**:
 
-- Llama 1B, GPT-2 Medium, Mamba 1B, Qwen3-Next 1B
-- WikiText-103, C4, FineWeb-Edu
+- **wins at scale**: at 10B tokens (FineWeb-Edu), frozen-partial reaches **PPL 35.2**, beating tuned full backprop (**39.0**) and GaLore (**52.4**)—the short-horizon ranking *inverts*;
+- uses **the least VRAM** (10.9 GB vs. 17.4 GB full BP at matched batch size; 6.8 GB at batch 2);
+- is **the most learning-rate-robust** (6% PPL variation over a 3× lr range, vs. 110% for full BP and 1,749% for GaLore);
+- is **architecture-dependent**: attention models prefer an early-middle BP window; recurrent/SSM models require the input side.
 
-while saving **28–43% VRAM**. See the paper for accounting, ablations, and limitations.
+The non-BP layers can be frozen entirely—zeroth-order perturbation of them contributes at most ~4 PPL—so the method reduces to: **backpropagate a quarter, freeze three quarters.**
 
-**Important caveat (also in paper §Limitations).** The current split places the BP group on the *input side* of the network; backward therefore still traverses the back stack to deliver gradients to the front. The measured VRAM savings come primarily from removed optimizer state and back-group parameter gradients, not from fully eliminating back-layer activations. Results are single-seed, on a single RTX 5090, and restricted to the early-training regime.
+---
+
+## Key result: the ranking inverts with training horizon
+
+| Method | 20M tokens (WikiText) | **10B tokens (FineWeb-Edu)** | VRAM |
+| ------ | --------------------- | ---------------------------- | ---- |
+| Frozen-partial (pos6) | 185 (3rd) | **35.2 (1st)** | 6.8 GB |
+| Full BP | 159 (2nd) | 39.0 (2nd) | 14.5 GB |
+| GaLore (rank 256) | 149 (1st) | 52.4 (3rd) | 8.5 GB |
+
+Zero-shot downstream (10B checkpoints, lm-eval-harness):
+
+| Method | HellaSwag | PIQA | LAMBADA |
+| ------ | --------- | ---- | ------- |
+| Frozen-partial | 27.4 | 57.3 | **10.5** |
+| Full BP | 27.7 | 57.4 | 8.7 |
+| GaLore | 26.2 | 54.4 | 3.9 |
+| *(chance)* | *25.0* | *50.0* | *~0* |
 
 ---
 
@@ -47,14 +46,20 @@ while saving **28–43% VRAM**. See the paper for accounting, ablations, and lim
 
 ```
 hybrid-zo-pretrain/
-├── LICENSE                # Apache-2.0
-├── NOTICE                 # attribution / pseudonym preservation clause
-├── README.md              # this file
+├── LICENSE                    # Apache-2.0
+├── NOTICE                     # attribution / pseudonym preservation clause
+├── README.md
 ├── requirements.txt
 ├── scripts/
-│   └── run_generality.py  # main experiment runner (all 4 architectures, 3 datasets)
+│   ├── run_generality.py      # short-horizon runner (4 architectures, 3 datasets,
+│   │                          #   position sweep, frozen/hybrid/galore modes)
+│   ├── run_10b.py             # 10B-token runner with checkpoint/resume + SIGTERM
+│   ├── preprocess_fineweb.py  # tokenize FineWeb-Edu → flat uint16 binary
+│   ├── eval_10b.py            # zero-shot downstream eval (HellaSwag/PIQA/LAMBADA)
+│   └── stability_analysis.py  # Hessian / Jacobian / gradient-covariance probes
 └── results/
-    └── gate2/             # raw JSON logs from the runs reported in the paper
+    ├── gate2/                 # short-horizon JSON logs (paper tables)
+    └── 10b/                   # 10B training + eval JSON logs
 ```
 
 ---
@@ -63,55 +68,62 @@ hybrid-zo-pretrain/
 
 ```bash
 pip install -r requirements.txt
-
-# GPT-2 Medium + WikiText, backprop baseline
-python scripts/run_generality.py \
-    --name G1a_gpt2m_backprop --model gpt2m --data wikitext --mode backprop
-
-# GPT-2 Medium + WikiText, Hybrid (front 25% BP + back 75% ZO+SGD, k=1)
-python scripts/run_generality.py \
-    --name G1b_gpt2m_hybrid --model gpt2m --data wikitext --mode hybrid
-
-# Llama 1B + C4, Hybrid
-python scripts/run_generality.py \
-    --name G2b_llama_c4_hybrid --model llama1b --data c4 --mode hybrid
 ```
 
-Supported flags: `--model {gpt2m,gpt2l,llama1b,qwen3next,mamba1b}`, `--data {wikitext,c4,fineweb-edu}`, `--mode {backprop,hybrid}`, `--steps`, `--batch_size`, `--lr_front`, `--lr_back`, `--data_tokens`.
+**Short-horizon (20M tokens), position sweep:**
+```bash
+# Full backprop baseline (tune lr!)
+python scripts/run_generality.py --name fullbp --model llama1b --mode backprop --lr_front 1e-4
 
-Outputs go to `results/gate2/gate2_<name>.json` with per-eval perplexity, wall time, and peak VRAM.
+# Frozen-partial: BP on a 6-layer window starting at layer 6, rest frozen
+python scripts/run_generality.py --name frozen_pos6 --model llama1b --mode frozen \
+    --split_start 6 --lr_front 2e-4
+
+# GaLore baseline
+python scripts/run_generality.py --name galore --model llama1b --mode backprop \
+    --galore_rank 256 --lr_front 1e-3
+```
+
+**10B-token run (with resume + graceful SIGTERM checkpointing):**
+```bash
+# 1. Preprocess once (~20 GB output)
+python scripts/preprocess_fineweb.py --output data/fineweb_edu_10b.bin --max_tokens 10200000000
+
+# 2. Train (re-run the same command to resume from the latest checkpoint)
+python scripts/run_10b.py --run_name frozen_pos6_10b --mode frozen --split_start 6 --lr 2e-4 \
+    --data data/fineweb_edu_10b.bin --total_tokens 10000000000 --resume
+
+# 3. Evaluate
+python scripts/eval_10b.py --checkpoint checkpoints/10b/frozen_pos6_10b_final.pt --run_name frozen_pos6_10b
+```
+
+Modes: `--mode {backprop,hybrid,frozen}` plus `--galore_rank R` (R>0 enables GaLore in backprop mode).
+`run_10b.py` traps `SIGTERM`/`SIGINT` to save a checkpoint and exit, so it survives SLURM wall-time limits—re-submit with `--resume` to continue.
 
 ---
 
-## Reproducing the paper tables
+## Reproducing the paper
 
-The JSON files under `results/gate2/` are the exact runs used in the paper's tables. File names follow this scheme:
+- `results/gate2/` — short-horizon runs (position sweep, architecture comparison, lr sweep, frozen/ZO/embed ablations).
+- `results/10b/` — the 10B training logs (`*_s42.json`) and downstream eval (`*_eval.json`) for all three methods.
 
-| Prefix | Meaning |
-| ------ | ------- |
-| `G1a`, `G1b` | GPT-2 Medium baseline / hybrid on WikiText |
-| `G2a`, `G2b` | Llama 1B on C4 |
-| `G3a`, `G3b` | Llama 1B on FineWeb-Edu |
-| `M1a`, `M1b` | Mamba 1B on WikiText |
-| `Q1a`, `Q1b` | Qwen3-Next 1B on WikiText |
-| `J*`, `L*`   | ZO ratio sweep (50/75/83/90 %) |
-| `E*`         | ε magnitude sweep |
-| `F*`         | back-Adam variant |
-
-Every run was a single seed on a single RTX 5090 (32 GB), bf16 parameters, sequence length 512, micro-batch 2, 20,000 optimizer steps (~20 M tokens consumed).
+All 10B runs: Llama 1B, seed 42, effective batch size 64 (32,768 tokens/update), warmup 100M → cosine decay, identical data and order across methods; only the per-method optimal learning rate differs.
 
 ---
 
 ## Licensing
 
-- **Code** (this repository): Apache License 2.0 — see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE). You may use, modify, and redistribute, but you must retain the copyright line and attribution clause (pseudonym `Raen2264` + Zenodo DOI).
-- **Paper** (on Zenodo): Creative Commons Attribution 4.0 International (CC BY 4.0). You may reuse and adapt with credit to `Raen2264` and a link to the Zenodo DOI.
+- **Code**: Apache-2.0 — see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE). Retain the copyright line and attribution clause (pseudonym `Raen2264` + Zenodo DOI).
+- **Paper** (on Zenodo): CC BY 4.0. Reuse/adapt with credit to `Raen2264` and a link to the Zenodo DOI.
+
+The author name **Raen2264** is a pseudonym; please retain it exactly as written.
 
 ---
 
 ## Version history
 
-- **v1 (2026)** — initial Zenodo preprint; scripts for generality runs; raw result JSONs.
+- **v2 (2026)** — position sweep + architecture dependence; properly tuned baselines; GaLore comparison; **10B-token horizon showing frozen-partial overtakes full BP**; downstream eval.
+- **v1 (2026)** — initial Zenodo preprint (*Noise Over Gradients*); hybrid ZO+SGD generality runs.
 
 ---
 

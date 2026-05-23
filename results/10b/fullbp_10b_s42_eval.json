@@ -1,0 +1,18 @@
+{
+  "run_name": "fullbp_10b_s42",
+  "checkpoint": "/scratch/alpine/jaki3237/hybrid-zo-10b/checkpoints/10b/fullbp_10b_s42_final.pt",
+  "results": {
+    "hellaswag": {
+      "acc": 0.26946823341963755,
+      "acc_norm": 0.27743477394941246
+    },
+    "piqa": {
+      "acc": 0.5729053318824809,
+      "acc_norm": 0.573993471164309
+    },
+    "lambada_openai": {
+      "acc": 0.08713370851930914,
+      "acc_norm": "N/A"
+    }
+  }
+}

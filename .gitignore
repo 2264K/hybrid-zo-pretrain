@@ -9,6 +9,8 @@ logs/
 checkpoints/
 *.pt
 *.safetensors
+*.bin
+data/
 .DS_Store
 .vscode/
 .idea/

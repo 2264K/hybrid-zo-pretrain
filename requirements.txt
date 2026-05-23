@@ -2,6 +2,8 @@ torch>=2.4
 transformers>=4.44
 datasets>=2.20
 numpy
+galore-torch        # for --galore_rank / GaLore baseline
+lm-eval>=0.4        # for eval_10b.py downstream evaluation
 # Mamba-SSM is optional: only needed to run --model mamba1b.
 # Install manually on a compatible GPU/Triton setup:
 #   pip install mamba-ssm causal-conv1d

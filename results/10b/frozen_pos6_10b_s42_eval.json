@@ -1,0 +1,18 @@
+{
+  "run_name": "frozen_pos6_10b_s42",
+  "checkpoint": "checkpoints/10b/frozen_pos6_10b_s42_final.pt",
+  "results": {
+    "hellaswag": {
+      "acc": 0.2689703246365266,
+      "acc_norm": 0.2740489942242581
+    },
+    "lambada_openai": {
+      "acc": 0.10537550941199302,
+      "acc_norm": "N/A"
+    },
+    "piqa": {
+      "acc": 0.5707290533188248,
+      "acc_norm": 0.573449401523395
+    }
+  }
+}
