@@ -4,7 +4,7 @@ Companion code for the preprint:
 
 > **Which Layers Need Backpropagation? Position-Dependent Partial Training for Memory-Efficient LLM Pretraining**
 > Raen2264 (independent researcher, pseudonymous).
-> Preprint, 2026. A Zenodo DOI will be added here once the v2 record is published.
+> Zenodo preprint v2, 2026. **DOI:** [10.5281/zenodo.20392068](https://doi.org/10.5281/zenodo.20392068)
 
 This is **v2**, a substantial revision of v1 (*"Noise Over Gradients"*). v1's two headline claims were re-examined: the output-side BP recommendation was overturned by a position sweep, and the "partial beats full BP" claim—reached in v1 via an under-tuned baseline at a 20M-token horizon—turns out to be **correct at scale** when baselines are properly tuned and training is extended to 10B tokens.
 
@@ -108,6 +108,25 @@ Modes: `--mode {backprop,hybrid,frozen}` plus `--galore_rank R` (R>0 enables GaL
 - `results/10b/` — the 10B training logs (`*_s42.json`) and downstream eval (`*_eval.json`) for all three methods.
 
 All 10B runs: Llama 1B, seed 42, effective batch size 64 (32,768 tokens/update), warmup 100M → cosine decay, identical data and order across methods; only the per-method optimal learning rate differs.
+
+---
+
+## How to cite
+
+```bibtex
+@misc{raen2264_which_layers_2026,
+  author       = {Raen2264},
+  title        = {{Which Layers Need Backpropagation? Position-Dependent
+                   Partial Training for Memory-Efficient LLM Pretraining}},
+  year         = {2026},
+  publisher    = {Zenodo},
+  version      = {v2},
+  doi          = {10.5281/zenodo.20392068},
+  url          = {https://doi.org/10.5281/zenodo.20392068}
+}
+```
+
+The author name **Raen2264** is a pseudonym; please retain it exactly as written.
 
 ---
 
