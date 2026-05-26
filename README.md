@@ -4,7 +4,7 @@ Companion code for the preprint:
 
 > **Which Layers Need Backpropagation? Position-Dependent Partial Training for Memory-Efficient LLM Pretraining**
 > Raen2264 (independent researcher, pseudonymous).
-> Zenodo preprint v2, 2026. **DOI:** `10.5281/zenodo.XXXXXXX` *(to be filled on upload)*.
+> Preprint, 2026. A Zenodo DOI will be added here once the v2 record is published.
 
 This is **v2**, a substantial revision of v1 (*"Noise Over Gradients"*). v1's two headline claims were re-examined: the output-side BP recommendation was overturned by a position sweep, and the "partial beats full BP" claim—reached in v1 via an under-tuned baseline at a 20M-token horizon—turns out to be **correct at scale** when baselines are properly tuned and training is extended to 10B tokens.
 
